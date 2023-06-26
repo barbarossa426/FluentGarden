@@ -14,4 +14,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FluentGarden.Provider\FluentGarden.Provider.csproj" />
+    <ProjectReference Include="..\FluentGarden.Repository\FluentGarden.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
