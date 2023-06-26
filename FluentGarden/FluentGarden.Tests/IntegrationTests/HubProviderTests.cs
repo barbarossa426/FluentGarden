@@ -29,19 +29,58 @@ public class HubTests : IntegrationTest
     }
 
     [Test]
+    public async Task ShouldGetDeviceByIp()
+    {
+        //Given
+        string expectedIp = "123.0.0.1";
+        GetRequiredService<IHubProvider>(out var service);
+        Device expectedDevice = await AddDevice(service, expectedIp);
+
+        //When
+        Device outcome = await service.GetDeviceByIp(expectedIp);
+
+        //Then
+        outcome.Should().Be(expectedDevice);
+    }
+
+    [Test]
+    public async Task ShouldSetDeviceName()
+    {
+        //Given
+        string expectedIp = "123.0.0.1";
+        string expectedName = "flowerpot";
+        GetRequiredService<IHubProvider>(out var service);
+        Device device = await AddDevice(service, expectedIp);
+
+        //When
+        Device outcome = await service.SetDeviceName(device, expectedName);
+
+        //Then
+        outcome.Name.Should().Be(expectedName);
+    }
+
+    [Test]
     public async Task ShouldRemoveDeviceFromHubAsync()
     {
-        ////Given
-        ////TODO add device
-        //string expectedIp = "123.0.0.1";
-        //HubProvider hubProvider = new();
-        //Device expectedDevice = await hubProvider.GetDeviceByIp(expectedIp);
+        //Given
+        string expectedIp = "123.0.0.1";
+        GetRequiredService<IHubProvider>(out var service);
+        await AddDevice(service, expectedIp);
 
-        ////When
-        //var outcome = await hubProvider.RemoveDeviceFromHub(expectedDevice);
+        Device expectedDevice = await service.GetDeviceByIp(expectedIp);
 
-        ////Then
-        //outcome.Should().Be(1);
-        Assert.Fail();
+        //When
+        var outcome = await service.RemoveDeviceFromHub(expectedDevice);
+
+        //Then
+        outcome.Should().NotBeNull();
+    }
+
+    private async Task<Device> AddDevice(IHubProvider hub, string ip = "192.168.0.100", DeviceType type = DeviceType.Esp32)
+    {
+        Device device = new(type, ip);
+
+        Device output = await hub.AddDeviceToHub(device);
+        return output;
     }
 }

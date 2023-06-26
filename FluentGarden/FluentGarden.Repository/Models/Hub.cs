@@ -21,7 +21,12 @@ public class Hub
 
     public Hub RemoveDevice(Device device)
     {
-        _devices.Remove(device);
+        bool result = _devices.Remove(device);
+        if (result is false)
+        {
+            throw new HubException($"Device with id {device.Id} could not be removed");
+        }
+
         return this;
     }
 

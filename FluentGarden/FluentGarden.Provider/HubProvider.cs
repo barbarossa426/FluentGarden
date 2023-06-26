@@ -26,9 +26,10 @@ public class HubProvider : IHubProvider
         throw new NotImplementedException();
     }
 
-    public Task<Device> GetDeviceByIp(string ip)
+    public async Task<Device> GetDeviceByIp(string ip)
     {
-        throw new NotImplementedException();
+        var output = await _hubRepository.GetDeviceByIp(ip);
+        return output;
     }
 
     public Task<DateTime> GetHubTime()
@@ -46,9 +47,16 @@ public class HubProvider : IHubProvider
         throw new NotImplementedException();
     }
 
-    public Task<int> RemoveDeviceFromHub(Device device)
+    public async Task<List<Device>> RemoveDeviceFromHub(Device device)
     {
-        throw new NotImplementedException();
+        var output = await _hubRepository.RemoveDevices(device);
+        return output;
+    }
+
+    public async Task<Device> SetDeviceName(Device device, string name)
+    {
+        await _hubRepository.SetDeviceName(device, name);
+        return device;
     }
 
     public Task TriggerDevice(Device device, params DeviceAction[] actions)

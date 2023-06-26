@@ -6,7 +6,7 @@ public interface IHubProvider
 {
     Task<Device> AddDeviceToHub(Device device);
 
-    Task<int> RemoveDeviceFromHub(Device device);
+    Task<List<Device>> RemoveDeviceFromHub(Device device);
 
     Task TriggerDevice(Device device, params DeviceAction[] actions);
 
@@ -19,4 +19,5 @@ public interface IHubProvider
     Task<DateTime> GetHubTime();
 
     Task CheckIn(string ip);
+    Task<Device> SetDeviceName(Device device, string name);
 }

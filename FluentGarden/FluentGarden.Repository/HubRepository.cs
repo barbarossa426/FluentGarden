@@ -32,9 +32,10 @@ public class HubRepository : IHubRepository
         throw new NotImplementedException();
     }
 
-    public Task<List<Device>> RemoveDevices()
+    public Task<List<Device>> RemoveDevices(Device device)
     {
-        throw new NotImplementedException();
+        var output = _hub.RemoveDevice(device);
+        return Task.FromResult(output.Devices.ToList());
     }
 
     private async Task<HubRepository> SyncHub()
@@ -83,5 +84,17 @@ public class HubRepository : IHubRepository
     {
         var output = _hub.GetDevice(id);
         return Task.FromResult(output);
+    }
+
+    public Task<Device> GetDeviceByIp(string ip)
+    {
+        var output = _hub.GetDevice(ip);
+        return Task.FromResult(output);
+    }
+
+    public Task<Device> SetDeviceName(Device device, string name)
+    {
+        device.SetName(name);
+        return Task.FromResult(device);
     }
 }
