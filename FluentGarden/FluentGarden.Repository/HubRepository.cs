@@ -18,7 +18,7 @@ public class HubRepository : IHubRepository
 
     public async Task<List<Device>> AddDevice(Device device)
     {
-        Gethub();
+        await SyncHub();
 
         _hub.AddDevice(device);
 
@@ -37,18 +37,17 @@ public class HubRepository : IHubRepository
         throw new NotImplementedException();
     }
 
-    private HubRepository Gethub()
+    private async Task<HubRepository> SyncHub()
     {
-        //TODO make Async
         Stream? jsonStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_hub.ConnectionString);
 
         if (jsonStream is null)
         {
-            throw new NullReferenceException("Can not read jsonfile");
+            throw new HubRepositoryException("Can not read jsonfile");
         }
 
         StreamReader reader = new StreamReader(jsonStream);
-        var jsonString = reader.ReadToEnd();
+        var jsonString = await reader.ReadToEndAsync();
 
         var options = new JsonSerializerOptions
         {
@@ -59,7 +58,7 @@ public class HubRepository : IHubRepository
 
         if (output is null)
         {
-            throw new HubRepositoryException("Hub not found");
+            throw new HubRepositoryException("Could not Deserialize hub, hub is null");
         }
 
         _hub = output;
@@ -76,7 +75,13 @@ public class HubRepository : IHubRepository
         }
         catch (Exception ex)
         {
-            throw new ArgumentException("Can not save data", ex);
+            throw new HubRepositoryException("Can not save data", ex);
         }
+    }
+
+    public Task<Device> GetDeviceById(Guid id)
+    {
+        var output = _hub.GetDevice(id);
+        return Task.FromResult(output);
     }
 }

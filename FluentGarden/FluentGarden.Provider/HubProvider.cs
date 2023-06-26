@@ -1,13 +1,24 @@
 ﻿using FluentGarden.Provider.Interfaces;
+using FluentGarden.Repository.Interfaces;
 using FluentGarden.Repository.Models;
 
 namespace FluentGarden.Provider;
 
 public class HubProvider : IHubProvider
 {
-    public Task<Hub> AddDeviceToHub(Device device)
+    public IHubRepository _hubRepository;
+
+    public HubProvider(IHubRepository hubRepository)
     {
-        throw new NotImplementedException();
+        _hubRepository = hubRepository;
+    }
+
+    public async Task<Device> AddDeviceToHub(Device device)
+    {
+        await _hubRepository.AddDevice(device);
+
+        Device output = await _hubRepository.GetDeviceById(device.Id);
+        return output;
     }
 
     public Task CheckIn(string ip)

@@ -4,7 +4,7 @@ namespace FluentGarden.Provider.Interfaces;
 
 public interface IHubProvider
 {
-    Task<Hub> AddDeviceToHub(Device device);
+    Task<Device> AddDeviceToHub(Device device);
 
     Task<int> RemoveDeviceFromHub(Device device);
 

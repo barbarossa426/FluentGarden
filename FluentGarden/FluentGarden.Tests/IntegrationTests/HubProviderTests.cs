@@ -1,8 +1,9 @@
 using FluentAssertions;
+using FluentGarden.Tests.Base;
 
-namespace FluentGarden.Tests;
+namespace FluentGarden.Tests.IntegrationTests;
 
-public class HubTests
+public class HubTests : IntegrationTest
 {
     [SetUp]
     public void Setup()
