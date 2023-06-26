@@ -5,7 +5,7 @@ namespace FluentGarden.Provider;
 
 public class HubProvider : IHubProvider
 {
-    public Task AddDeviceToHub(Device device)
+    public Task<Hub> AddDeviceToHub(Device device)
     {
         throw new NotImplementedException();
     }

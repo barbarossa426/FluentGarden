@@ -10,7 +10,7 @@ public class HubTests
     }
 
     [Test]
-    public void ShouldAddDeviceToHub()
+    public async Task ShouldAddDeviceToHub()
     {
         //Given
         string expectedIp = "192.168.0.100";
@@ -19,9 +19,11 @@ public class HubTests
         HubProvider provider = new();
 
         //When
-        provider.AddDeviceToHub(expectedDevice);
+        Hub outcome = await provider.AddDeviceToHub(expectedDevice);
 
         //Then
+        Device device = outcome.GetDevice(expectedIp);
+        device.Should().NotBeNull();
     }
 
     [Test]

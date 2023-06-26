@@ -11,7 +11,7 @@ public class HubRepositoryTests
         //Given
         string expectedDeviceip = "123.123.123.10";
         Device expectedDevice = new(DeviceType.Esp32, expectedDeviceip);
-        HubRepository repository = new();
+        HubRepository repository = new("FluentGarden.Repository.Database.json");
 
         //When
         var devices = await repository.AddDevice(expectedDevice);

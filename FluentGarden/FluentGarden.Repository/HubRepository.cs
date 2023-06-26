@@ -1,4 +1,5 @@
-﻿using FluentGarden.Repository.Interfaces;
+﻿using FluentGarden.Repository.Exceptions;
+using FluentGarden.Repository.Interfaces;
 using FluentGarden.Repository.Models;
 using System.Reflection;
 using System.Text;
@@ -8,17 +9,20 @@ namespace FluentGarden.Repository;
 
 public class HubRepository : IHubRepository
 {
+    public Hub _hub { get; private set; }
+
+    public HubRepository(string connectionString)
+    {
+        _hub = new Hub(connectionString);
+    }
+
     public async Task<List<Device>> AddDevice(Device device)
     {
-        Hub? data = ReadDatabase();
-        if (data is null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        Gethub();
 
-        data.AddDevice(device);
+        _hub.AddDevice(device);
 
-        var output = await WriteToDatabaseAsync(data);
+        var output = await SaveHub(_hub);
 
         return output.Devices.ToList();
     }
@@ -33,10 +37,10 @@ public class HubRepository : IHubRepository
         throw new NotImplementedException();
     }
 
-    private Hub? ReadDatabase(string file = "FluentGarden.Repository.Database.json")
+    private HubRepository Gethub()
     {
         //TODO make Async
-        Stream? jsonStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(file);
+        Stream? jsonStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_hub.ConnectionString);
 
         if (jsonStream is null)
         {
@@ -52,16 +56,23 @@ public class HubRepository : IHubRepository
         };
 
         Hub? output = JsonSerializer.Deserialize<Hub>(jsonString, options);
-        return output;
+
+        if (output is null)
+        {
+            throw new HubRepositoryException("Hub not found");
+        }
+
+        _hub = output;
+        return this;
     }
 
-    private async Task<Hub> WriteToDatabaseAsync(Hub data, string file = "FluentGarden.Repository.Database.json")
+    private async Task<Hub> SaveHub(Hub hub)
     {
         try
         {
-            string modifiedJsonContent = JsonSerializer.Serialize<Hub>(data);
-            await File.WriteAllTextAsync(file, modifiedJsonContent, Encoding.Unicode);
-            return data;
+            string modifiedJsonContent = JsonSerializer.Serialize<Hub>(hub);
+            await File.WriteAllTextAsync(hub.ConnectionString, modifiedJsonContent, Encoding.Unicode);
+            return hub;
         }
         catch (Exception ex)
         {
