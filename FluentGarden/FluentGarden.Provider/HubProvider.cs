@@ -4,7 +4,7 @@ using FluentGarden.Repository.Models;
 
 namespace FluentGarden.Provider;
 
-public class HubProvider : IHubProvider
+public partial class HubProvider : IHubProvider
 {
     public IHubRepository _hubRepository;
 
@@ -24,6 +24,18 @@ public class HubProvider : IHubProvider
     public Task CheckIn(string ip)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<Group> CreateGroup(string name, GroupType type)
+    {
+        Group output = await _hubRepository.CreateGroup(name, type);
+        return output;
+    }
+
+    public async Task<List<Group>> DeleteGroup(Group group)
+    {
+        var output = await _hubRepository.DeleteGroup(group);
+        return output;
     }
 
     public async Task<Device> GetDeviceByIp(string ip)
@@ -49,7 +61,7 @@ public class HubProvider : IHubProvider
 
     public async Task<List<Device>> RemoveDeviceFromHub(Device device)
     {
-        var output = await _hubRepository.RemoveDevices(device);
+        var output = await _hubRepository.RemoveDevice(device);
         return output;
     }
 

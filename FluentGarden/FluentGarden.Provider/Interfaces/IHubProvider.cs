@@ -19,5 +19,12 @@ public interface IHubProvider
     Task<DateTime> GetHubTime();
 
     Task CheckIn(string ip);
+
     Task<Device> SetDeviceName(Device device, string name);
+
+    Task<Group> CreateGroup(string name, GroupType type = GroupType.Device);
+
+    Task<List<Group>> DeleteGroup(Group group);
+
+    //Task<Group> CreateSchedule(DateTime startDate);
 }

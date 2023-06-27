@@ -1,6 +1,8 @@
-﻿namespace FluentGarden.Repository.Models;
+﻿using FluentGarden.Repository.Models.Base;
 
-public class Device : Base
+namespace FluentGarden.Repository.Models;
+
+public record Device : ValueObject
 {
     public string Name { get; private set; } = string.Empty;
     public DeviceType Type { get; private set; }

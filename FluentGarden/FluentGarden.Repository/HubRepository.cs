@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace FluentGarden.Repository;
 
-public class HubRepository : IHubRepository
+public partial class HubRepository : IHubRepository
 {
     public Hub _hub { get; private set; }
 
@@ -32,7 +32,7 @@ public class HubRepository : IHubRepository
         throw new NotImplementedException();
     }
 
-    public Task<List<Device>> RemoveDevices(Device device)
+    public Task<List<Device>> RemoveDevice(Device device)
     {
         var output = _hub.RemoveDevice(device);
         return Task.FromResult(output.Devices.ToList());
@@ -96,5 +96,17 @@ public class HubRepository : IHubRepository
     {
         device.SetName(name);
         return Task.FromResult(device);
+    }
+
+    public Task<Group> CreateGroup(string name, GroupType type)
+    {
+        Group output = _hub.AddGroup(name, type);
+        return Task.FromResult(output);
+    }
+
+    public Task<List<Group>> DeleteGroup(Group group)
+    {
+        List<Group> output = _hub.DeleteGroup(group);
+        return Task.FromResult(output);
     }
 }

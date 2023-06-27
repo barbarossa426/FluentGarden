@@ -76,6 +76,35 @@ public class HubTests : IntegrationTest
         outcome.Should().NotBeNull();
     }
 
+    [Test]
+    public async Task ShouldCreateGroup()
+    {
+        //Given
+        string expectedName = "flowerpots";
+        GetRequiredService<IHubProvider>(out var service);
+
+        //When
+        Group outcome = await service.CreateGroup(expectedName);
+
+        //Then
+        outcome.Should().NotBeNull();
+        outcome.Name.Should().Be(expectedName);
+    }
+
+    [Test]
+    public async Task ShouldDeleteGroup()
+    {
+        //Given
+        GetRequiredService<IHubProvider>(out var service);
+        var groupOne = await service.CreateGroup("Flower pots");
+        var groupTwo = await service.CreateGroup("Greenhouse");
+
+        //When
+        List<Group> outcome = await service.DeleteGroup(groupOne);
+        outcome.Should().HaveCount(1);
+        outcome.First().Id.Should().Be(groupTwo.Id);
+    }
+
     private async Task<Device> AddDevice(IHubProvider hub, string ip = "192.168.0.100", DeviceType type = DeviceType.Esp32)
     {
         Device device = new(type, ip);
