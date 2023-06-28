@@ -4,11 +4,11 @@ using FluentGarden.Provider.Interfaces;
 
 namespace FluentGarden.Provider;
 
-public partial class HubProvider : IGroupProvider
+public class GroupProvider : IGroupProvider
 {
     public IGroupRepository _groupRepository;
 
-    public HubProvider(IGroupRepository groupRepository)
+    public GroupProvider(IGroupRepository groupRepository)
     {
         _groupRepository = groupRepository;
     }

@@ -3,7 +3,7 @@ using FluentGarden.Infrastructure.Interfaces;
 
 namespace FluentGarden.Repository
 {
-    public partial class HubRepository : IGroupRepository
+    public class GroupRepository : IGroupRepository
     {
         public Task<Group> CreateSchedule(Group group, DateTime startDate)
         {

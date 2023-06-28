@@ -10,11 +10,6 @@ public record Schedule : ValueObject
     public int Duration { get; private set; }
     public Schedule(DateTime start, int interval = 5, int duration = 10)
     {
-        if (start < DateTime.UtcNow)
-        {
-            throw new ScheduleException($"Start date cannot be in the past. {nameof(start)}");
-        }
-
         Start = start;
         Interval = interval;
         Duration = duration;
@@ -22,10 +17,6 @@ public record Schedule : ValueObject
 
     public Schedule SetStartTime(DateTime start)
     {
-        if (start < DateTime.UtcNow)
-        {
-            throw new ScheduleException($"Start date cannot be in the past. {nameof(start)}");
-        }
         Start = start;
         return this;
     }

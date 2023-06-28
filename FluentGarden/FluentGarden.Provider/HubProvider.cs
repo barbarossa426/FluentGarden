@@ -4,7 +4,7 @@ using FluentGarden.Provider.Interfaces;
 
 namespace FluentGarden.Provider;
 
-public partial class HubProvider : IHubProvider
+public class HubProvider : IHubProvider
 {
     public IHubRepository _hubRepository;
 

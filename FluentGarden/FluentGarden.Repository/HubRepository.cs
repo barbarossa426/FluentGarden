@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace FluentGarden.Repository;
 
-public partial class HubRepository : IHubRepository
+public class HubRepository : IHubRepository
 {
     public Hub _hub { get; private set; }
 

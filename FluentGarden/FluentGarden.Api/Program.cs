@@ -9,10 +9,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IHubRepository, HubRepository>(hubRepository => new HubRepository("FluentGarden.Infrastructure.Database.json"));
-//builder.Services.AddScoped<IGroupRepository, HubRepository>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 
 builder.Services.AddScoped<IHubProvider, HubProvider>();
-builder.Services.AddScoped<IGroupProvider, HubProvider>();
+builder.Services.AddScoped<IGroupProvider, GroupProvider>();
 
 var app = builder.Build();
 
