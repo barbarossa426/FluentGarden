@@ -12,7 +12,7 @@ public interface IHubRepository
 
     Task<Device> GetDeviceById(Guid id);
 
-    Task<Device> GetDeviceByIp(string ip);
+    Task<Device> GetDeviceByMacAddress(string macAddress);
 
     Task<Device> SetDeviceName(Device device, string name);
 

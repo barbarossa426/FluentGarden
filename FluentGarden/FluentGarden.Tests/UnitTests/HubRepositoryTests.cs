@@ -9,8 +9,8 @@ public class HubRepositoryTests
     public async Task ShouldWriteToDataBaseFile()
     {
         //Given
-        string expectedDeviceip = "123.123.123.10";
-        Device expectedDevice = new(DeviceType.Esp32, expectedDeviceip);
+        string expectedMacAddress = "00-B0-D0-63-C2-26";
+        Device expectedDevice = new(DeviceType.esp32, expectedMacAddress);
         HubRepository repository = new("FluentGarden.Infrastructure.Database.json");
 
         //When
@@ -20,6 +20,6 @@ public class HubRepositoryTests
         var outcome = devices.FirstOrDefault(expectedDevice);
 
         outcome.Should().NotBeNull();
-        outcome.Ip.Should().Be(expectedDeviceip);
+        outcome.MacAddress.Should().Be(expectedMacAddress);
     }
 }

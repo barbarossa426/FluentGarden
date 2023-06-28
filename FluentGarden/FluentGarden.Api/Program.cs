@@ -44,8 +44,8 @@ app.MapGet("/devices", (IHubProvider hubProvider) => hubProvider.ListDevices())
     .WithName("ListDevices")
     .WithOpenApi();
 
-app.MapGet("/device/{ip}", (IHubProvider hubProvider, string ip) => hubProvider.GetDeviceByIp(ip))
-    .WithName("GetDeviceByIp")
+app.MapGet("/device/{macAddress}", (IHubProvider hubProvider, string macAddress) => hubProvider.GetDeviceByMacAddress(macAddress))
+    .WithName("GetDeviceByMacAddress")
     .WithOpenApi();
 
 app.MapPost("/device/{ip}/ping", (IHubProvider hubProvider, string ip) => hubProvider.Ping(ip))

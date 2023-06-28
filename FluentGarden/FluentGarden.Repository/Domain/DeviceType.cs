@@ -2,6 +2,6 @@
 
 public enum DeviceType
 {
-    None = 0,
-    Esp32 = 1
+    none = 0,
+    esp32 = 1
 }

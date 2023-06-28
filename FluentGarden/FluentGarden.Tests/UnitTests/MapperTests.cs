@@ -11,7 +11,8 @@ public class MapperTests
     {
         //Given
         string expectedMacAddress = "00-B0-D0-63-C2-26";
-        DeviceRequest request = new DeviceRequest(expectedMacAddress);
+        string expectedType = "esp32";
+        DeviceRequest request = new DeviceRequest(expectedMacAddress, expectedType);
 
         //When
         Device outcome = request.AsDomainEntity<Device>();

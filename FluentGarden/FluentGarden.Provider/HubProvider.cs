@@ -38,9 +38,9 @@ public class HubProvider : IHubProvider
         return output;
     }
 
-    public async Task<Device> GetDeviceByIp(string ip)
+    public async Task<Device> GetDeviceByMacAddress(string macAddress)
     {
-        var output = await _hubRepository.GetDeviceByIp(ip);
+        var output = await _hubRepository.GetDeviceByMacAddress(macAddress);
         return output;
     }
 

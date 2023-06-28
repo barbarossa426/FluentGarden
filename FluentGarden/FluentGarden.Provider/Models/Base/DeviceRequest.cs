@@ -2,53 +2,38 @@
 
 namespace FluentGarden.Provider.Models.Base;
 
-public class Request
+public class ActionRequest
 {
 }
 
 public static class RequestExtention
 {
-    //public static T AsDomainEntity<T>(this Request request)
-    //{
-       
-    //}
-
-
-    public static T AsDomainEntity<T>(this Request request)
+    public static T AsDomainEntity<T>(this ActionRequest request)
     {
         var targetType = typeof(T);
         var sourceType = request.GetType();
 
-        var targetInstance = Activator.CreateInstance(targetType);
+        var output = MapProperties(targetType, request);
 
-        var sourceProperties = sourceType.GetProperties();
-        var targetProperties = targetType.GetProperties();
-
-        foreach (var sourceProp in sourceProperties)
-        {
-            var targetProp = targetProperties.FirstOrDefault(
-                p => p.Name == sourceProp.Name && p.PropertyType == sourceProp.PropertyType);
-
-            if (targetProp != null && targetProp.CanWrite)
-            {
-                var value = sourceProp.GetValue(request);
-                targetProp.SetValue(targetInstance, value);
-            }
-        }
-
-        return (T)targetInstance;
+        return (T)output;
     }
 
+    private static object MapProperties(Type targetType, dynamic request)
+    {
+        if (targetType == typeof(Device))
+        {
 
+            string type = request.Type;
+            string macAddress = request.MacAddress;
 
+            DeviceType deviceType = (DeviceType)Enum.Parse(typeof(DeviceType), type.ToLower());
 
+            Device device = new Device(deviceType, macAddress);
 
+            return device;
+        }
 
+        return null; //Cast error
 
-
-
-
-
-
+    }
 }
-

@@ -86,9 +86,9 @@ public class HubRepository : IHubRepository
         return Task.FromResult(output);
     }
 
-    public Task<Device> GetDeviceByIp(string ip)
+    public Task<Device> GetDeviceByMacAddress(string macAddress)
     {
-        var output = _hub.GetDevice(ip);
+        var output = _hub.GetDevice(macAddress);
         return Task.FromResult(output);
     }
 

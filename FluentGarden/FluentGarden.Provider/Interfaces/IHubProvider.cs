@@ -12,7 +12,7 @@ public interface IHubProvider
 
     Task<List<Device>> ListDevices();
 
-    Task<Device> GetDeviceByIp(string ip);
+    Task<Device> GetDeviceByMacAddress(string macAddress);
 
     Task<bool> Ping(string ip);
 

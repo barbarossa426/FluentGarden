@@ -34,12 +34,12 @@ public class Hub : AggregateRoot
         return this;
     }
 
-    public Device GetDevice(string ip)
+    public Device GetDevice(string macAddress)
     {
-        var output = _devices.FirstOrDefault(x => x.Ip == ip);
+        var output = _devices.FirstOrDefault(x => x.MacAddress == macAddress);
         if (output == null)
         {
-            throw new HubException($"Device with ip {ip} could not be found");
+            throw new HubException($"Device with {macAddress} could not be found");
         }
         return output;
     }
