@@ -1,6 +1,8 @@
+using FluentGarden.Infrastructure.Domain;
 using FluentGarden.Infrastructure.Interfaces;
 using FluentGarden.Provider;
 using FluentGarden.Provider.Interfaces;
+using FluentGarden.Provider.Models.Base;
 using FluentGarden.Provider.Models.Requests;
 using FluentGarden.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +30,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/devices", (IHubProvider hubProvider, [FromBody] DeviceRequest request) =>
 {
-
+    hubProvider.AddDeviceToHub(request.AsDomainEntity<Device>());
 }).WithName("AddDeviceToHub")
   .WithOpenApi();
 

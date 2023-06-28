@@ -33,7 +33,6 @@ public static class RequestExtention
             return device;
         }
 
-        return null; //Cast error
-
+        throw new NotImplementedException(nameof(request));
     }
 }
