@@ -28,8 +28,4 @@
     <ProjectReference Include="..\FluentGarden.Provider\FluentGarden.Provider.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UnitTests\" />
-  </ItemGroup>
-
 </Project>

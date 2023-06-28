@@ -1,7 +1,9 @@
 using FluentGarden.Infrastructure.Interfaces;
 using FluentGarden.Provider;
 using FluentGarden.Provider.Interfaces;
+using FluentGarden.Provider.Models.Requests;
 using FluentGarden.Repository;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,11 +26,51 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/addDevice", () =>
+app.MapPost("/devices", (IHubProvider hubProvider, [FromBody] DeviceRequest request) =>
 {
-})
-.WithName("AddDeviceToHub")
-.WithOpenApi();
+
+}).WithName("AddDeviceToHub")
+  .WithOpenApi();
+
+app.MapDelete("/devices", (IHubProvider hubProvider) => hubProvider.RemoveDeviceFromHub(null!))
+    .WithName("RemoveDeviceFromHub")
+    .WithOpenApi();
+
+app.MapPost("/devices/trigger", (IHubProvider hubProvider) => hubProvider.TriggerDevice(null!, null!))
+    .WithName("TriggerDevice")
+    .WithOpenApi();
+
+app.MapGet("/devices", (IHubProvider hubProvider) => hubProvider.ListDevices())
+    .WithName("ListDevices")
+    .WithOpenApi();
+
+app.MapGet("/device/{ip}", (IHubProvider hubProvider, string ip) => hubProvider.GetDeviceByIp(ip))
+    .WithName("GetDeviceByIp")
+    .WithOpenApi();
+
+app.MapPost("/device/{ip}/ping", (IHubProvider hubProvider, string ip) => hubProvider.Ping(ip))
+    .WithName("Ping")
+    .WithOpenApi();
+
+app.MapGet("/device/time", (IHubProvider hubProvider) => hubProvider.GetHubTime())
+    .WithName("GetHubTime")
+    .WithOpenApi();
+
+app.MapPost("/device/{ip}/checkin", (IHubProvider hubProvider, string ip) => hubProvider.CheckIn(ip))
+    .WithName("CheckIn")
+    .WithOpenApi();
+
+app.MapPost("/device/setname", (IHubProvider hubProvider) => hubProvider.SetDeviceName(null!, null!))
+    .WithName("SetDeviceName")
+    .WithOpenApi();
+
+app.MapPost("/groups", (IHubProvider hubProvider) => hubProvider.CreateGroup(null!))
+    .WithName("CreateGroup")
+    .WithOpenApi();
+
+app.MapDelete("/groups", (IHubProvider hubProvider) => hubProvider.DeleteGroup(null!))
+    .WithName("DeleteGroup")
+    .WithOpenApi();
 
 app.Run();
 

@@ -25,6 +25,4 @@ public interface IHubProvider
     Task<Group> CreateGroup(string name, GroupType type = GroupType.Device);
 
     Task<List<Group>> DeleteGroup(Group group);
-
-    //Task<Group> CreateSchedule(DateTime startDate);
 }

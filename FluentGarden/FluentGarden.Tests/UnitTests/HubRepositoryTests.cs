@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
-using FluentGarden.Infrastructure.Domain;
 using FluentGarden.Repository;
 
-namespace FluentGarden.Tests;
+namespace FluentGarden.Tests.UnitTests;
 
 public class HubRepositoryTests
 {
