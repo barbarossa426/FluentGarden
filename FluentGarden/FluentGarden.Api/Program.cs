@@ -28,9 +28,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/devices", (IHubProvider hubProvider, [FromBody] DeviceRequest request) =>
+app.MapPost("/devices", async (IHubProvider hubProvider, [FromBody] DeviceRequest request) =>
 {
-    hubProvider.AddDeviceToHub(request.AsDomainEntity<Device>());
+    var output = await hubProvider.AddDeviceToHub(request.AsDomainEntity<Device>());
+
+
 }).WithName("AddDeviceToHub")
   .WithOpenApi();
 

@@ -1,5 +1,7 @@
 using FluentAssertions;
 using FluentGarden.Provider.Interfaces;
+using FluentGarden.Provider.Models.Requests;
+using FluentGarden.Provider.Models.Response;
 using FluentGarden.Tests.Base;
 
 namespace FluentGarden.Tests.IntegrationTests;
@@ -34,13 +36,13 @@ public class HubTests : IntegrationTest
         //Given
         string expectedMacAddress = "00-B0-D0-63-C2-26";
         GetRequiredService<IHubProvider>(out var service);
-        Device expectedDevice = await AddDevice(service, expectedMacAddress);
+        DeviceResponse expectedDevice = await AddDevice(service, expectedMacAddress);
 
         //When
-        Device outcome = await service.GetDeviceByMacAddress(expectedMacAddress);
+        DeviceResponse outcome = await service.GetDeviceByMacAddress(expectedMacAddress);
 
         //Then
-        outcome.Should().Be(expectedDevice);
+        outcome.MacAddress.Should().Be(expectedDevice.MacAddress);
     }
 
     [Test]
@@ -50,27 +52,29 @@ public class HubTests : IntegrationTest
         string expectedMacAddress = "00-B0-D0-63-C2-26";
         string expectedName = "flowerpot";
         GetRequiredService<IHubProvider>(out var service);
-        Device device = await AddDevice(service, expectedMacAddress);
+        DeviceResponse device = await AddDevice(service, expectedMacAddress);
+        DeviceRequest deviceRequest = new(device.MacAddress, device.Type);
 
         //When
-        Device outcome = await service.SetDeviceName(device, expectedName);
+        DeviceResponse outcome = await service.SetDeviceName(expectedMacAddress, expectedName);
 
         //Then
         outcome.Name.Should().Be(expectedName);
     }
 
     [Test]
-    public async Task ShouldRemoveDeviceFromHubAsync()
+    public async Task ShouldRemoveDeviceFromHub()
     {
         //Given
         string expectedMackAddress = "00-B0-D0-63-C2-26";
         GetRequiredService<IHubProvider>(out var service);
         await AddDevice(service, expectedMackAddress);
 
-        Device expectedDevice = await service.GetDeviceByMacAddress(expectedMackAddress);
+        DeviceResponse expectedDevice = await service.GetDeviceByMacAddress(expectedMackAddress);
+        DeviceRequest request = new(expectedDevice.MacAddress, expectedDevice.Type);
 
         //When
-        var outcome = await service.RemoveDeviceFromHub(expectedDevice);
+        var outcome = await service.RemoveDeviceFromHub(expectedMackAddress);
 
         //Then
         outcome.Should().NotBeNull();
@@ -105,11 +109,11 @@ public class HubTests : IntegrationTest
         outcome.First().Id.Should().Be(groupTwo.Id);
     }
 
-    private async Task<Device> AddDevice(IHubProvider hub, string macAddress, DeviceType type = DeviceType.esp32)
+    private async Task<DeviceResponse> AddDevice(IHubProvider hub, string macAddress, DeviceType type = DeviceType.esp32)
     {
         Device device = new(type, macAddress);
 
-        Device output = await hub.AddDeviceToHub(device);
+        DeviceResponse output = await hub.AddDeviceToHub(device);
 
         return output;
     }

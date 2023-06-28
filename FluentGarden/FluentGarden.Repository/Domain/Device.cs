@@ -19,5 +19,5 @@ public record Device : ValueObject
     {
         Name = name;
         return this;
-    }
+    }   
 }

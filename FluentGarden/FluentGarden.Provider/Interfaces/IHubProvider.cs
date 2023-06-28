@@ -1,18 +1,20 @@
 ﻿using FluentGarden.Infrastructure.Domain;
+using FluentGarden.Provider.Models.Requests;
+using FluentGarden.Provider.Models.Response;
 
 namespace FluentGarden.Provider.Interfaces;
 
 public interface IHubProvider
 {
-    Task<Device> AddDeviceToHub(Device device);
+    Task<DeviceResponse> AddDeviceToHub(Device device);
 
-    Task<List<Device>> RemoveDeviceFromHub(Device device);
+    Task<List<DeviceResponse>> RemoveDeviceFromHub(string macAddress);
 
     Task TriggerDevice(Device device, params DeviceAction[] actions);
 
-    Task<List<Device>> ListDevices();
+    Task<List<DeviceResponse>> ListDevices();
 
-    Task<Device> GetDeviceByMacAddress(string macAddress);
+    Task<DeviceResponse> GetDeviceByMacAddress(string macAddress);
 
     Task<bool> Ping(string ip);
 
@@ -20,7 +22,7 @@ public interface IHubProvider
 
     Task CheckIn(string ip);
 
-    Task<Device> SetDeviceName(Device device, string name);
+    Task<DeviceResponse> SetDeviceName(string macAddress, string name);
 
     Task<Group> CreateGroup(string name, GroupType type = GroupType.Device);
 

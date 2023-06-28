@@ -1,6 +1,8 @@
 ﻿using FluentGarden.Infrastructure.Domain;
 using FluentGarden.Infrastructure.Interfaces;
 using FluentGarden.Provider.Interfaces;
+using FluentGarden.Provider.Models.Base;
+using FluentGarden.Provider.Models.Response;
 
 namespace FluentGarden.Provider;
 
@@ -13,12 +15,12 @@ public class HubProvider : IHubProvider
         _hubRepository = hubRepository;
     }
 
-    public async Task<Device> AddDeviceToHub(Device device)
+    public async Task<DeviceResponse> AddDeviceToHub(Device device)
     {
         await _hubRepository.AddDevice(device);
 
         Device output = await _hubRepository.GetDeviceById(device.Id);
-        return output;
+        return output.AsResponse<DeviceResponse>();
     }
 
     public Task CheckIn(string ip)
@@ -38,10 +40,10 @@ public class HubProvider : IHubProvider
         return output;
     }
 
-    public async Task<Device> GetDeviceByMacAddress(string macAddress)
+    public async Task<DeviceResponse> GetDeviceByMacAddress(string macAddress)
     {
         var output = await _hubRepository.GetDeviceByMacAddress(macAddress);
-        return output;
+        return output.AsResponse<DeviceResponse>();
     }
 
     public Task<DateTime> GetHubTime()
@@ -49,7 +51,7 @@ public class HubProvider : IHubProvider
         throw new NotImplementedException();
     }
 
-    public Task<List<Device>> ListDevices()
+    public Task<List<DeviceResponse>> ListDevices()
     {
         throw new NotImplementedException();
     }
@@ -59,16 +61,27 @@ public class HubProvider : IHubProvider
         throw new NotImplementedException();
     }
 
-    public async Task<List<Device>> RemoveDeviceFromHub(Device device)
+    public async Task<List<DeviceResponse>> RemoveDeviceFromHub(string macAddress)
     {
-        var output = await _hubRepository.RemoveDevice(device);
+        Device request = await _hubRepository.GetDeviceByMacAddress(macAddress);
+        List<Device> devices = await _hubRepository.RemoveDevice(request);
+
+        var output = new List<DeviceResponse>();
+        devices.ForEach((device) =>
+        {
+            output.Add(device.AsResponse<DeviceResponse>());
+        });
+
         return output;
     }
 
-    public async Task<Device> SetDeviceName(Device device, string name)
+    public async Task<DeviceResponse> SetDeviceName(string macAddress, string name)
     {
-        await _hubRepository.SetDeviceName(device, name);
-        return device;
+        var request = await _hubRepository.GetDeviceByMacAddress(macAddress);
+
+        var output = await _hubRepository.SetDeviceName(request, name);
+
+        return output.AsResponse<DeviceResponse>();
     }
 
     public Task TriggerDevice(Device device, params DeviceAction[] actions)

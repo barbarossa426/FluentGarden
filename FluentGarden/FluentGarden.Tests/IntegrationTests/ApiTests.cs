@@ -1,14 +1,30 @@
-﻿namespace FluentGarden.Tests.IntegrationTests;
+﻿using FluentAssertions;
+using FluentGarden.Provider.Models.Requests;
+using FluentGarden.Provider.Models.Response;
+using FluentGarden.Tests.Base;
+using System.Net;
+using System.Net.Http.Json;
+using System.Text.Json;
 
-public class ApiTests
+namespace FluentGarden.Tests.IntegrationTests;
+
+public class ApiTests : IntegrationTest
 {
-    [Test]
-    public async Task ShouldAddDevice()
+    [TestCase("/devices")]
+    public async Task ShouldAddDevice(string endpoint)
     {
         //Given
-
+        string expectedMacAddress = "00-B0-D0-63-C2-26";
+        DeviceRequest request = new(expectedMacAddress, "EsP32");
 
         //When
+        var response = await HttpClient.PostAsJsonAsync(endpoint, request);
+        string responseContent = await response.Content.ReadAsStringAsync();
+
+        DeviceResponse? outcome = JsonSerializer.Deserialize<DeviceResponse>(responseContent);
+
         //Then
+        response.Should().NotBeNull();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }
