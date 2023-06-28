@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FluentGarden.Provider\FluentGarden.Provider.csproj" />
-    <ProjectReference Include="..\FluentGarden.Repository\FluentGarden.Repository.csproj" />
+    <ProjectReference Include="..\FluentGarden.Repository\FluentGarden.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
-﻿using FluentGarden.Provider.Interfaces;
-using FluentGarden.Repository.Interfaces;
-using FluentGarden.Repository.Models;
+﻿using FluentGarden.Infrastructure.Domain;
+using FluentGarden.Infrastructure.Interfaces;
+using FluentGarden.Provider.Interfaces;
 
 namespace FluentGarden.Provider;
 

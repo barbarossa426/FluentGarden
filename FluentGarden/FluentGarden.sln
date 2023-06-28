@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentGarden.Provider", "Fl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentGarden.Tests", "FluentGarden.Tests\FluentGarden.Tests.csproj", "{A6777569-844A-4E7D-AF5F-6BC208FE9A2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentGarden.Repository", "FluentGarden.Repository\FluentGarden.Repository.csproj", "{8C3BF7EF-A387-431E-9387-A9730EE1E2CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentGarden.Infrastructure", "FluentGarden.Repository\FluentGarden.Infrastructure.csproj", "{8C3BF7EF-A387-431E-9387-A9730EE1E2CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

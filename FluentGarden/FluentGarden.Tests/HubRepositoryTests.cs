@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentGarden.Infrastructure.Domain;
 using FluentGarden.Repository;
 
 namespace FluentGarden.Tests;
@@ -11,7 +12,7 @@ public class HubRepositoryTests
         //Given
         string expectedDeviceip = "123.123.123.10";
         Device expectedDevice = new(DeviceType.Esp32, expectedDeviceip);
-        HubRepository repository = new("FluentGarden.Repository.Database.json");
+        HubRepository repository = new("FluentGarden.Infrastructure.Database.json");
 
         //When
         var devices = await repository.AddDevice(expectedDevice);

@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentGarden.Infrastructure.Domain;
 using FluentGarden.Provider.Interfaces;
 using FluentGarden.Tests.Base;
 

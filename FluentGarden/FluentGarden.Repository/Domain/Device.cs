@@ -1,6 +1,6 @@
-﻿using FluentGarden.Repository.Models.Base;
+﻿using FluentGarden.Infrastructure.Domain.Base;
 
-namespace FluentGarden.Repository.Models;
+namespace FluentGarden.Infrastructure.Domain;
 
 public record Device : ValueObject
 {

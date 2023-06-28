@@ -1,4 +1,4 @@
-﻿using FluentGarden.Infrastructure.Domain;
+﻿using FluentGarden.Repository.Models;
 
 namespace FluentGarden.Infrastructure.Interfaces;
 

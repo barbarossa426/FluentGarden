@@ -1,4 +1,4 @@
-﻿namespace FluentGarden.Repository.Models.Base;
+﻿namespace FluentGarden.Infrastructure.Domain.Base;
 
 public class Aggregate
 {

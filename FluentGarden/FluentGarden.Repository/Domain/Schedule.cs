@@ -1,7 +1,7 @@
-﻿using FluentGarden.Repository.Exceptions;
-using FluentGarden.Repository.Models.Base;
+﻿using FluentGarden.Infrastructure.Domain.Base;
+using FluentGarden.Infrastructure.Exceptions;
 
-namespace FluentGarden.Repository.Models;
+namespace FluentGarden.Infrastructure.Domain;
 
 public record Schedule : ValueObject
 {

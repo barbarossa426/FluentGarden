@@ -1,7 +1,7 @@
-﻿using FluentGarden.Repository.Exceptions;
-using FluentGarden.Repository.Models.Base;
+﻿using FluentGarden.Infrastructure.Domain.Base;
+using FluentGarden.Infrastructure.Exceptions;
 
-namespace FluentGarden.Repository.Models;
+namespace FluentGarden.Infrastructure.Domain;
 
 public class Hub : AggregateRoot
 {
@@ -12,7 +12,7 @@ public class Hub : AggregateRoot
 
     private readonly List<Group> _groups = new List<Group>();
 
-    public Hub(string connectionsTring = "FluentGarden.Repository.Database.json")
+    public Hub(string connectionsTring = "FluentGarden.Infrastructure.Database.json")
     {
         ConnectionString = connectionsTring;
     }

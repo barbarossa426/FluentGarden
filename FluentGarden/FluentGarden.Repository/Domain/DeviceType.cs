@@ -1,4 +1,4 @@
-﻿namespace FluentGarden.Repository.Models;
+﻿namespace FluentGarden.Infrastructure.Domain;
 
 public enum DeviceType
 {

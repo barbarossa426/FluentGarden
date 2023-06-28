@@ -1,5 +1,4 @@
-﻿using FluentGarden.Infrastructure.Domain;
-using FluentGarden.Infrastructure.Interfaces;
+﻿using FluentGarden.Infrastructure.Interfaces;
 
 namespace FluentGarden.Repository
 {

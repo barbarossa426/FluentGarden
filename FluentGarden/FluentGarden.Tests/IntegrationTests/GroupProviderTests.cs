@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentGarden.Infrastructure.Domain;
 using FluentGarden.Provider.Interfaces;
 using FluentGarden.Tests.Base;
 
@@ -9,6 +10,7 @@ public class GroupProviderTests : IntegrationTest
     [Test]
     public async Task ShouldCreateSchedule()
     {
+        Assert.Fail();
         //Given
         DateTime expectedStart = DateTime.UtcNow;
         string expectedGroupName = "flowerpots";

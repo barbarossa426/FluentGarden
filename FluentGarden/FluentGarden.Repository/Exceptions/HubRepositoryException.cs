@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace FluentGarden.Repository.Exceptions;
+namespace FluentGarden.Infrastructure.Exceptions;
 
 public class HubRepositoryException : Exception
 {
