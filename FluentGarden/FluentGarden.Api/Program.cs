@@ -5,6 +5,7 @@ using FluentGarden.Provider.Interfaces;
 using FluentGarden.Provider.Models.Base;
 using FluentGarden.Provider.Models.Requests;
 using FluentGarden.Repository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +32,7 @@ app.UseHttpsRedirection();
 app.MapPost("/devices", async (IHubProvider hubProvider, [FromBody] DeviceRequest request) =>
 {
     var output = await hubProvider.AddDeviceToHub(request.AsDomainEntity<Device>());
-
+    return Results.Ok(output);
 
 }).WithName("AddDeviceToHub")
   .WithOpenApi();

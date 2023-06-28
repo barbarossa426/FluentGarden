@@ -20,11 +20,14 @@ public class ApiTests : IntegrationTest
         //When
         var response = await HttpClient.PostAsJsonAsync(endpoint, request);
         string responseContent = await response.Content.ReadAsStringAsync();
-
-        DeviceResponse? outcome = JsonSerializer.Deserialize<DeviceResponse>(responseContent);
+        var outcome = JsonSerializer.Deserialize<DeviceResponse>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
 
         //Then
         response.Should().NotBeNull();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+        outcome.MacAddress.Should().Be(expectedMacAddress);
     }
 }

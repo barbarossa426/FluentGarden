@@ -25,9 +25,10 @@ public static class ResponseExtention
 
             string type = dynamicResponse.Type.ToString();
             string macAddress = dynamicResponse.MacAddress;
-            string name = dynamicResponse.Name;
+            string name = dynamicResponse.Name ?? string.Empty;
+            string ip = dynamicResponse.Ip ?? string.Empty;
 
-            DeviceResponse device = new DeviceResponse(type, macAddress, name);
+            DeviceResponse device = new DeviceResponse() { Type = type, MacAddress = macAddress, Name = name, Ip = ip };
 
             return device;
         }

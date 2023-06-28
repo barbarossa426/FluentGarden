@@ -22,7 +22,6 @@ public static class RequestExtention
     {
         if (targetType == typeof(Device))
         {
-
             string type = request.Type;
             string macAddress = request.MacAddress;
 
