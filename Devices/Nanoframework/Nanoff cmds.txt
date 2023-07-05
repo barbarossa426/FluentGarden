@@ -1,0 +1,24 @@
+
+nanoff --listports
+
+nanoff --platform esp32 --serialport COM3 --update -v diag
+
+
+nanoff --update --platform esp32 --serialport COM3 --chip esp8266 -v diag
+
+nanoff --update --target ch340g --serialport COM3 -v diag
+
+
+
+
+
+Errors:
+
+https://github.com/nanoframework/Home/issues?q=chip
+
+invalid choice: 'esp' (choose from 'auto', 'esp8266', 'esp32', 'esp32s2', 'esp32s3beta2', 'esp32s3', 'esp32c3', 'esp32c6beta', 'esp32h2beta1', 'esp32h2beta2', 'esp32c2')
+
+nanoff --platform auto --serialport COM3 --update -v diag
+
+
+
