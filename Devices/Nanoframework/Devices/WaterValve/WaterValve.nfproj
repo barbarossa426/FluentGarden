@@ -22,6 +22,7 @@
     <Compile Include="Models\DeviceRequest.cs" />
     <Compile Include="Models\EventType.cs" />
     <Compile Include="Services\ActionService.cs" />
+    <Compile Include="Services\Events\ActionServiceEventArgs.cs" />
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

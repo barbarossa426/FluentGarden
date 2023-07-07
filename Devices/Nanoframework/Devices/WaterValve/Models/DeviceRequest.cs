@@ -10,9 +10,12 @@ namespace WaterValve.Models
 
         public DeviceRequest(string macAddress, string type, string name)
         {
-            MacAddress = macAddress ?? throw new ArgumentNullException(nameof(macAddress));
-            Type = type ?? throw new ArgumentNullException(nameof(type));
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            //MacAddress = macAddress ?? throw new ArgumentNullException(nameof(macAddress));
+            //Type = type ?? throw new ArgumentNullException(nameof(type));
+            //Name = name ?? throw new ArgumentNullException(nameof(name));
+            MacAddress = macAddress;
+            Type = type;
+            Name = name;
         }
     }
 }

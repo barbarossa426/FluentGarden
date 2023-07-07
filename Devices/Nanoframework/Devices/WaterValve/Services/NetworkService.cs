@@ -1,7 +1,9 @@
-﻿using System;
+﻿using nanoFramework.Json;
+using System;
 using System.Net.Http;
 using System.Text;
 using WaterValve.Models;
+using WaterValve.Services.Events;
 
 namespace WaterValve.Services
 {
@@ -16,11 +18,14 @@ namespace WaterValve.Services
             {
                 string endpoint = $"{BaseRoute}/devices";
 
-                string requestAsjson = nanoFramework.Json.JsonSerializer.SerializeObject(request);
+                //string requestAsjson1 = JsonSerializer.SerializeObject(request);
 
-                var content = new StringContent(requestAsjson, Encoding.UTF8, "application/json");
-                var result = _httpClient.Post(endpoint, content);
-                result.EnsureSuccessStatusCode();
+                string requestAsjson = JsonConvert.SerializeObject(request);
+
+
+                //var content = new StringContent(requestAsjson, Encoding.UTF8, "application/json");
+                //var result = _httpClient.Post(endpoint, content);
+                //result.EnsureSuccessStatusCode();
 
                 var output = $"connected";
 
@@ -30,16 +35,6 @@ namespace WaterValve.Services
             {
                 return $"{request.Name} | {request.MacAddress} status : disconnected. {e.Message} ";
             }
-        }
-
-        public NetworkService SetBaseRoute(string route)
-        {
-            if (string.IsNullOrEmpty(route))
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
-            BaseRoute = route;
-            return this;
         }
 
         public string ListenToNetworkCommands(string macAddress)
@@ -61,9 +56,32 @@ namespace WaterValve.Services
             }
         }
 
-        public void RaiseEvent(EventType type, string message)
+        public NetworkService SetBaseRoute(string route)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(route))
+            {
+                throw new ArgumentNullException(nameof(route));
+            }
+            BaseRoute = route;
+            return this;
+        }
+
+        public void OnActiontExecuted(object source, ActionServiceEventArgs args)
+        {
+            try
+            {
+                string endpoint = $"{BaseRoute}/event";
+
+                string requestAsjson = nanoFramework.Json.JsonSerializer.SerializeObject(args);
+
+                var content = new StringContent(requestAsjson, Encoding.UTF8, "application/json");
+                var result = _httpClient.Post(endpoint, content);
+                result.EnsureSuccessStatusCode();
+            }
+            catch (Exception)
+            {
+                // :(
+            }
         }
     }
 
@@ -73,6 +91,6 @@ namespace WaterValve.Services
 
         string ListenToNetworkCommands(string macAddress);
 
-        void RaiseEvent(EventType type, string message);
+        void OnActiontExecuted(object source, ActionServiceEventArgs args);
     }
 }

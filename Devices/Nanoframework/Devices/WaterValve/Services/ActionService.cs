@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Device.Gpio;
 using WaterValve.Models;
+using WaterValve.Services.Events;
 
 namespace WaterValve.Services
 {
     public class ActionService : IActionService
     {
         private readonly INetworkService _networkService;
+
+        public event EventHandler<ActionServiceEventArgs> ActionExecuted;
 
         public ActionService(INetworkService networkService)
         {
@@ -18,18 +21,21 @@ namespace WaterValve.Services
             try
             {
                 pin.Toggle();
-                _networkService.RaiseEvent(EventType.Success, $"{deviceName} water valve closed");
+                OnActiontExecuted(new(EventType.Success, $"{deviceName} water valve closed"));
+
                 return true;
             }
             catch (Exception e)
             {
-                _networkService.RaiseEvent(EventType.Error, $"{deviceName} | {pin.PinNumber} | {e.Message}");
+                OnActiontExecuted(new(EventType.Error, $"{deviceName} | {pin.PinNumber} | {e.Message}"));
+
                 return false;
             }
         }
 
         public string ExecuteActionCommands(ActionType action, GpioPin pin, string deviceName)
         {
+            ActionExecuted += _networkService.OnActiontExecuted;
             switch (action)
             {
                 case ActionType.Default:
@@ -58,14 +64,22 @@ namespace WaterValve.Services
             try
             {
                 pin.Toggle();
-                _networkService.RaiseEvent(EventType.Success, $"{deviceName} water valve open");
+                OnActiontExecuted(new(EventType.Success, $"{deviceName} water valve open"));
+
                 return true;
             }
             catch (Exception e)
             {
-                _networkService.RaiseEvent(EventType.Error, $"{deviceName} | {pin.PinNumber} | {e.Message}");
+                OnActiontExecuted(new(EventType.Error, $"{deviceName} | {pin.PinNumber} | {e.Message}"));
+
                 return false;
             }
+        }
+
+        protected virtual void OnActiontExecuted(ActionServiceEventArgs eventMessage)
+        {
+            if (ActionExecuted != null)
+                ActionExecuted(this, eventMessage);
         }
     }
 
